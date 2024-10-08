@@ -3,6 +3,8 @@ const APP = express();
 const tasks = require("./routes/tasks.js");
 const connectDB = require("./db/connect.js");
 require("dotenv").config();
+const notFound = require("./middleware/notFound.js");
+const errorHandlerMiddleware = require("./middleware/errorHandler.js");
 
 // middleware
 APP.use(express.static("./public"));
@@ -10,8 +12,11 @@ APP.use(express.json());
 
 // routes
 APP.use("/api/v1/tasks", tasks);
+APP.use(notFound);
+APP.use(errorHandlerMiddleware);
 
-const port = 3000;
+// PORT, DB and server configuration
+const port = process.env.PORT || 3000;
 
 const start = async () => {
     try {
@@ -26,4 +31,5 @@ const start = async () => {
     }
 }
 
+// start the server
 start();
