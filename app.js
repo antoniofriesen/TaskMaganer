@@ -5,13 +5,10 @@ const connectDB = require("./db/connect.js");
 require("dotenv").config();
 
 // middleware
+APP.use(express.static("./public"));
 APP.use(express.json());
 
 // routes
-APP.get("/hello", (req, res) => {
-    res.send("Task Mabager APP");
-});
-
 APP.use("/api/v1/tasks", tasks);
 
 const port = 3000;
